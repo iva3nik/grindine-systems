@@ -1,0 +1,11 @@
+.sidebar {
+  width: 250px;
+  height: 100%;
+
+  &__point {
+    margin-bottom: 30px;
+    &:first-of-type {
+      margin-bottom: 40px;
+    }
+  }
+}
