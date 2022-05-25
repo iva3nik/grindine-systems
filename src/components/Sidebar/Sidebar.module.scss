@@ -1,6 +1,8 @@
 .sidebar {
+  box-sizing: border-box;
   width: 250px;
   height: 100%;
+  padding-top: 50px;
 
   &__point {
     margin-bottom: 30px;
