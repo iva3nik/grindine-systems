@@ -49,11 +49,25 @@
     padding: 14px 0 10px;
   }
 
+  &__destination {
+    font-size: 16px;
+
+    span {
+      color: rgb(0, 132, 207);
+    }
+  }
+
   &__line {
     padding: 15px 18px 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    font-size: 16px;
+
+    span {
+      font-size: 14px;
+      color: rgb(0, 132, 207);
+    }
   }
 
   &__stripe {
