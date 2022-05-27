@@ -6,13 +6,58 @@ import Button from "../Button/Button";
 
 import s from "./Card.module.scss";
 
-const Card = () => {
+const Card = ({ flight }) => {
+  console.log(flight);
+
+  const options = {
+    day: "numeric",
+    month: "short",
+    weekday: "short",
+  };
+
+  const optionsTime = {
+    hour: "numeric",
+    minute: "numeric",
+  };
+
+  const getTime = (str) => {
+    const date = new Date(str);
+    return date.toLocaleString("ru", optionsTime);
+  };
+
+  const getDate = (str) => {
+    const date = new Date(str);
+    return date.toLocaleString("ru", options);
+  };
+
+  const getDuration = (duration) => {
+    const hours = Math.floor(duration / 60);
+    const minutes = duration % 60;
+    return `${hours} ч ${minutes} мин`;
+  };
+
+  const getEndings = (number) => {
+    if (
+      number === 0 ||
+      number === 5 ||
+      number % 10 === 0 ||
+      number % 10 === 5
+    ) {
+      return number + " пересадок";
+    } else if (number === 1 || number % 10 === 1) {
+      return number + " пересадка";
+    } else {
+      return number + " пересадки";
+    }
+  };
+
   return (
     <section className={s.card}>
       <div className={s.card__header}>
-        <img className={s.card__logo} src={logo_lot} alt="logo lot" />
+        {/* <img className={s.card__logo} src={logo_lot} alt="logo lot" /> */}
+        <p>{flight.carrier.caption}</p>
         <div className={s.card__column}>
-          <p className={s.card__price}>21049 ₽</p>
+          <p className={s.card__price}>{flight.price.total.amount} ₽</p>
           <p className={s.card__note}>
             Стоимость для одного взрослого пассажира
           </p>
@@ -22,52 +67,70 @@ const Card = () => {
         <div className={s.info}>
           <div className={s.info__header}>
             <p className={s.info__destination}>
-              Москва, Шереметьево<span>(SVO) &rarr;</span>
+              {flight.legs[0].segments[0].departureCity.caption},{" "}
+              {flight.legs[0].segments[0].departureAirport.caption}
+              <span>
+                ({flight.legs[0].segments[0].departureAirport.uid}) &rarr;
+              </span>
             </p>
             <p className={s.info__destination}>
-              ЛОНДОН, Лондон, Зитроу<span>(LHR)</span>
+              {flight.legs[0].segments[0].arrivalAirport.caption},{" "}
+              {flight.legs[0].segments[0].arrivalCity.caption}
+              <span>({flight.legs[0].segments[0].arrivalAirport.uid})</span>
             </p>
           </div>
           <div className={s.info__line}>
             <p>
-              20:40 <span>18.авг вт</span>
+              {getTime(flight.legs[0].segments[0].departureDate)}{" "}
+              <span>{getDate(flight.legs[0].segments[0].departureDate)}</span>
             </p>
-            <p>14 ч 45 мин</p>
+            <p>{getDuration(flight.legs[0].segments[0].travelDuration)}</p>
             <p>
-              <span>19 авг. ср</span> 09:25
+              <span>{getDate(flight.legs[0].segments[0].arrivalDate)}</span>{" "}
+              {getTime(flight.legs[0].segments[0].arrivalDate)}
             </p>
           </div>
           <div className={s.info__stripe}>
             <hr />
-            <p>1 пересадка</p>
+            <p>{getEndings(flight.legs[0].segments[0].stops)}</p>
             <hr />
           </div>
           <h3 className={s.info__company}>
-            Рейс выполняет: LOT Polish Airlines
+            Рейс выполняет: {flight.carrier.caption}
           </h3>
           <hr className={s.info__swath} />
           <div className={s.info__header}>
             <p className={s.info__destination}>
-              Москва, Шереметьево<span>(SVO) &rarr;</span>
+              {flight.legs[0].segments[0].departureCity.caption},{" "}
+              {flight.legs[0].segments[0].departureAirport.caption}
+              <span>
+                ({flight.legs[0].segments[0].departureAirport.uid}) &rarr;
+              </span>
             </p>
-            <p className={s.info__destination}>ЛОНДОН, Лондон, Зитроу(LHR)</p>
+            <p className={s.info__destination}>
+              {flight.legs[0].segments[0].arrivalAirport.caption},{" "}
+              {flight.legs[0].segments[0].arrivalCity.caption}
+              <span>({flight.legs[0].segments[0].arrivalAirport.uid})</span>
+            </p>
           </div>
           <div className={s.info__line}>
             <p>
-              20:40 <span>18.авг вт</span>
+              {getTime(flight.legs[0].segments[0].departureDate)}{" "}
+              <span>{getDate(flight.legs[0].segments[0].departureDate)}</span>
             </p>
-            <p>14 ч 45 мин</p>
+            <p>{getDuration(flight.legs[0].segments[0].travelDuration)}</p>
             <p>
-              <span>19 авг. ср</span> 09:25
+              <span>{getDate(flight.legs[0].segments[0].arrivalDate)}</span>{" "}
+              {getTime(flight.legs[0].segments[0].arrivalDate)}
             </p>
           </div>
           <div className={s.info__stripe}>
             <hr />
-            <p>1 пересадка</p>
+            <p>{getEndings(flight.legs[0].segments[0].stops)}</p>
             <hr />
           </div>
           <h3 className={s.info__company}>
-            Рейс выполняет: LOT Polish Airlines
+            Рейс выполняет: {flight.carrier.caption}
           </h3>
         </div>
       </div>

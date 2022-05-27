@@ -2,6 +2,13 @@
   width: 640px;
   box-sizing: border-box;
 
+  &__card {
+    margin-bottom: 40px;
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+
   h1 {
     margin: 0;
   }
